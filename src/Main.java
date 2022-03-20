@@ -17,7 +17,7 @@
 *
 * generateList():
 * Instantiate a Random object to use to generate the weights and values for each item.
-* Generate a 10x3 2D array to use for the items in the house.
+* Generate an array of Items objects to use for the items in the house.
 *
 * */
 
@@ -36,7 +36,7 @@ public class Main {
     * Special: Method gets implicitly called by java at runtime, and only exits at program exit.*/
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int backpackWeightLimit;
+        int backpackWeightLimit = 0;
 
         System.out.print("Please enter a weight limit for the backpack (Must be a valid integer): ");
         String backpackWeightLimitString = in.next();
@@ -50,7 +50,7 @@ public class Main {
              System.exit(-1);
         }
 
-
+        generateList(backpackWeightLimit);
 
 
 
