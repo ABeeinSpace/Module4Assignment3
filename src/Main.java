@@ -2,22 +2,29 @@
 * INPUTS: Backpack Weight
 * OUTPUTS: A pretty-printed list of the best items to take from the house to maximize value.
 * CONSTRAINTS:
-* main():
-* Instantiate a Scanner instance to accept user input
-* Read in the user's weight limit (must be as a string because Java)
-* Check if the weight limit entered is a valid integer.
-*   If it is a valid integer, we can proceed.
-*   If the input is not an integer, we print an error and ask the user to try again.
-* Call generateList() to get the list of items inside the house and their weights and values. Assign the result
-*  of the function to a variable.
 *
+* main():
+*   Instantiate a Scanner instance to accept user input
+*   Read in the user's weight limit (must be as a string because Java)
+*
+*   if backpackWeightLimit is a valid integer:
+*       convert to int and continue
+*   else:
+*       Print an error
+*
+*   Item[] itemsInHouse = generateList()
+*   Item[] itemsInBackpack = Items[10]
+*   backpackValue = 0
+*   backpackWeight = 0
 *
 *
 *
 *
 * generateList():
 * Instantiate a Random object to use to generate the weights and values for each item.
-* Generate an array of Items objects to use for the items in the house.
+* Using the Item class, create an array of 10 items with randomized weights and values. Set the upper bound on the
+* nextInt() calls to something sensible.
+* Call printList() to print the new list of items, then return
 *
 * */
 
@@ -50,31 +57,56 @@ public class Main {
              System.exit(-1);
         }
 
-        generateList(backpackWeightLimit);
+        Item[] itemsInHouse = generateList(backpackWeightLimit);
 
+        Item[] itemsInBackpack = new Item[10];
+        int backpackValue = 0;
+        int backpackWeight = 0;
 
+        for (int i = 0; i < itemsInHouse.length; i++) {
+            for (int j = i; j < itemsInHouse.length - 1; j++) {
+
+            }
+        }
+
+        System.out.println("program finished successfully");
 
     }
 
     /* printList()
-     * Parameters:
+     * Parameters: item[] listToPrint
      * Returns: N/A (Void)
      * Description: Prints the list of items once generateList() generates it.*/
-    private static void printList() {
-
+    private static void printList(Item[] listToPrint) {
+        for (int i = 0; i < listToPrint.length; i++) {
+            System.out.println(listToPrint[i]);
+        }
     }
 
     /* generateList()
      * Parameters: int backpackWeightLimit
-     * Returns: N/A (Void)
+     * Returns: Item[]
      * Description: Generates the list of items, their values, and their weights. Calls printList() after the list is
      *  generated*/
-    private static void generateList(int backpackWeightLimit) {
+    private static Item[] generateList(int backpackWeightLimit) {
         // Remember that you should mod generated weights by the backpack's weight limit to ensure that the numbers
         // are usable
         Random rng = new Random();
 
+        Item[] items = new Item[10];
 
+        items[0] = new Item("PH CrapBook", rng.nextInt(10) % backpackWeightLimit, rng.nextInt(1000));
+        items[1] = new Item("Sungsam TV", rng.nextInt(100) % backpackWeightLimit, rng.nextInt(2000));
+        items[2] = new Item("Pear aPhone 16", rng.nextInt(3), rng.nextInt(2500));
+        items[3] = new Item("Keurig coffee maker", rng.nextInt(20), rng.nextInt(200));
+//        items[4] = new Item("Rolex wristwatch", rng.nextInt());
+//        items[5];
+//        items[6];
+//        items[7];
+//        items[8];
+//        items[9];
+        printList(items);
+        return items;
     }
 
 
