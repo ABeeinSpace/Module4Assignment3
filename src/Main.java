@@ -17,7 +17,23 @@
 *   backpackValue = 0
 *   backpackWeight = 0
 *
-*
+*   for (int i = 0; i < itemsInHouse.length; i++) {
+        for (int j = i; j < itemsInHouse.length - 1; j++) {
+            We need to find the item with the highest value in the list.
+        }
+        * Once we find the highest value, we check if adding its weight to the backpack will exceed the weight limit
+        * of the backpack.
+        * If it will, we set the value of the item to -1 (so that we wont select it again in the next run of the
+        * nested for loop.
+        *
+        * If not, we add the item to the backpack
+        *
+        * In order to add the item, we add the item's weight to the backpack's weight
+        *
+        * We then set the item's monetary value to an invalid number (such as -1) so that it won't be selected by the
+        * next iteration of the nested for loop
+        *
+    }
 *
 *
 * generateList():
@@ -69,8 +85,6 @@ public class Main {
             }
         }
 
-        System.out.println("program finished successfully");
-
     }
 
     /* printList()
@@ -93,18 +107,13 @@ public class Main {
         // are usable
         Random rng = new Random();
 
-        Item[] items = new Item[10];
+        Item[] items = new Item[5];
 
         items[0] = new Item("PH CrapBook", rng.nextInt(10) % backpackWeightLimit, rng.nextInt(1000));
         items[1] = new Item("Sungsam TV", rng.nextInt(100) % backpackWeightLimit, rng.nextInt(2000));
-        items[2] = new Item("Pear aPhone 16", rng.nextInt(3), rng.nextInt(2500));
+        items[2] = new Item("Pear aPhone 16", rng.nextInt(5), rng.nextInt(2500));
         items[3] = new Item("Keurig coffee maker", rng.nextInt(20), rng.nextInt(200));
-//        items[4] = new Item("Rolex wristwatch", rng.nextInt());
-//        items[5];
-//        items[6];
-//        items[7];
-//        items[8];
-//        items[9];
+        items[4] = new Item("Rolex wristwatch", rng.nextInt(3), rng.nextInt(3000));
         printList(items);
         return items;
     }
