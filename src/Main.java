@@ -23,12 +23,13 @@
         }
         * Once we find the highest value, we check if adding its weight to the backpack will exceed the weight limit
         * of the backpack.
-        * If it will, we set the value of the item to -1 (so that we wont select it again in the next run of the
+        * If it will, we set the value of the item to -1 (so that we won't select it again in the next run of the
         * nested for loop.
         *
         * If not, we add the item to the backpack
         *
-        * In order to add the item, we add the item's weight to the backpack's weight
+        * In order to add the item, we add the item's weight to the backpack's weight and add the item's monetary
+        * value to the total value of the backpack
         *
         * We then set the item's monetary value to an invalid number (such as -1) so that it won't be selected by the
         * next iteration of the nested for loop
@@ -75,26 +76,49 @@ public class Main {
 
         Item[] itemsInHouse = generateList(backpackWeightLimit);
 
-        Item[] itemsInBackpack = new Item[10];
+        Item[] itemsInBackpack = new Item[5];
         int backpackValue = 0;
         int backpackWeight = 0;
 
+        int maxValue = itemsInHouse[0].value;
+        int maxValueIndex = -1;
         for (int i = 0; i < itemsInHouse.length; i++) {
-            for (int j = i; j < itemsInHouse.length - 1; j++) {
-
+            for (int j = i; j < itemsInHouse.length; j++) {
+                if (itemsInHouse[j].value > maxValue) {
+                    maxValue = itemsInHouse[j].value;
+                    maxValueIndex = j;
+                }
+            }
+            if (maxValueIndex != -1 && backpackWeight + itemsInHouse[maxValueIndex].weight <= backpackWeightLimit) {
+                itemsInBackpack[i] = new Item(itemsInHouse[maxValueIndex].itemName,
+                        itemsInHouse[maxValueIndex].weight, itemsInHouse[maxValueIndex].value);
+                backpackValue += maxValue;
+                backpackWeight += itemsInHouse[maxValueIndex].weight;
+                itemsInHouse[maxValueIndex].value = -1;
+                maxValue = 0;
+                maxValueIndex = -1;
+            } else if (maxValueIndex != -1 && backpackWeight + itemsInHouse[maxValueIndex].weight > backpackWeightLimit) {
+                itemsInHouse[maxValueIndex].value = -1;
+                maxValue = 0;
+                maxValueIndex = -1;
             }
         }
 
+        printList(itemsInBackpack);
     }
 
     /* printList()
      * Parameters: item[] listToPrint
      * Returns: N/A (Void)
-     * Description: Prints the list of items once generateList() generates it.*/
+     * Description: Prints the list of items once generateList() generates it. Is also capable of printing the
+     * list of items in the backpack*/
     private static void printList(Item[] listToPrint) {
-        for (int i = 0; i < listToPrint.length; i++) {
-            System.out.println(listToPrint[i]);
+        for (Item item : listToPrint) {
+            if (item != null) {
+                System.out.println(item);
+            }
         }
+        System.out.println();
     }
 
     /* generateList()
