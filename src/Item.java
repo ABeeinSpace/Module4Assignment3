@@ -36,7 +36,7 @@ public class Item {
 	@Override
 	public String toString() {
 		String output = "";
-		output = output + String.format("%s %d %d", itemName, weight, value);
+		output = output + String.format("%-21s%4s %4d %17d", itemName, "", weight, value);
 		return output;
 	}
 }

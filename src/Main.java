@@ -80,7 +80,7 @@ public class Main {
         int backpackValue = 0;
         int backpackWeight = 0;
 
-        int maxValue = itemsInHouse[0].value;
+        int maxValue = 0;
         int maxValueIndex = -1;
         for (int i = 0; i < itemsInHouse.length; i++) {
             for (int j = i; j < itemsInHouse.length; j++) {
@@ -111,14 +111,32 @@ public class Main {
      * Parameters: item[] listToPrint
      * Returns: N/A (Void)
      * Description: Prints the list of items once generateList() generates it. Is also capable of printing the
-     * list of items in the backpack*/
+     * list of items in the backpack once that is determined.*/
     private static void printList(Item[] listToPrint) {
+
+        System.out.printf("%-19s%-19s%-18s\n", "Item Name", "Item Weight", "Item Value");
+        System.out.println("================================================");
         for (Item item : listToPrint) {
             if (item != null) {
                 System.out.println(item);
             }
         }
-        System.out.println();
+        System.out.println("================================================");
+        System.out.println("GRAND TOTALS:");
+        int totalWeight = 0;
+        int totalValue = 0;
+        for (int i = 0; i < listToPrint.length; i++) {
+            if (listToPrint[i] != null) {
+                totalWeight += listToPrint[i].weight;
+            }
+        }
+        for (int i = 0; i < listToPrint.length; i++) {
+            if (listToPrint[i] != null) {
+                totalValue += listToPrint[i].value;
+            }
+        }
+        System.out.printf("Total Weight: %30d lbs\n", totalWeight);
+        System.out.printf("Total Value: %33d $\n", totalValue);
     }
 
     /* generateList()
@@ -133,12 +151,11 @@ public class Main {
 
         Item[] items = new Item[5];
 
-        items[0] = new Item("PH CrapBook", rng.nextInt(10) % backpackWeightLimit, rng.nextInt(1000));
+        items[0] = new Item("PH CrapBook", rng.nextInt(20), rng.nextInt(1000));
         items[1] = new Item("Sungsam TV", rng.nextInt(100) % backpackWeightLimit, rng.nextInt(2000));
         items[2] = new Item("Pear aPhone 16", rng.nextInt(5), rng.nextInt(2500));
-        items[3] = new Item("Keurig coffee maker", rng.nextInt(20), rng.nextInt(200));
-        items[4] = new Item("Rolex wristwatch", rng.nextInt(3), rng.nextInt(3000));
-        printList(items);
+        items[3] = new Item("Keurig Coffee Maker", rng.nextInt(20), rng.nextInt(200));
+        items[4] = new Item("Rolex Wristwatch", rng.nextInt(3), rng.nextInt(3000));
         return items;
     }
 
