@@ -62,28 +62,31 @@ public class Main {
         Scanner in = new Scanner(System.in);
         int backpackWeightLimit = 0;
 
-        System.out.print("Please enter a weight limit for the backpack (Must be a valid integer): ");
-        String backpackWeightLimitString = in.next();
+        Boolean isInputValid = false;
+        while (!isInputValid) {
+            System.out.print("Please enter a weight limit for the backpack (Must be a valid integer): ");
+            String backpackWeightLimitString = in.next();
 
-        if (backpackWeightLimitString.matches("^-?\\d+$")) {
-            backpackWeightLimit = Integer.parseInt(backpackWeightLimitString);
-        } else {
-            System.out.println("ERROR: Weight limit entered is NOT an integer!");
-            // We need to loop back around to allow the user to try again. Note: the program will
-            // fail and bail during development.
-             System.exit(-1);
+            if (backpackWeightLimitString.matches("^-?\\d+$")) {
+                backpackWeightLimit = Integer.parseInt(backpackWeightLimitString);
+                isInputValid = true;
+            } else {
+                System.out.println("ERROR: Weight limit entered is NOT an integer!");
+                // We need to loop back around to allow the user to try again. By not setting the isInputValid flag,
+                // we repeat the loop to allow the user another crack at it
+            }
         }
 
         Item[] itemsInHouse = generateList(backpackWeightLimit);
 
-        Item[] itemsInBackpack = new Item[5];
+        Item[] itemsInBackpack = new Item[6];
         int backpackValue = 0;
         int backpackWeight = 0;
 
         int maxValue = 0;
         int maxValueIndex = -1;
         for (int i = 0; i < itemsInHouse.length; i++) {
-            for (int j = 0; j < itemsInHouse.length - 1; j++) {
+            for (int j = 0; j < itemsInHouse.length; j++) {
                 if (itemsInHouse[j].value > maxValue) {
                     maxValue = itemsInHouse[j].value;
                     maxValueIndex = j;
@@ -136,7 +139,7 @@ public class Main {
             }
         }
         System.out.printf("Total Weight (lbs.): %27d\n", totalWeight);
-        System.out.printf("Total Value ($): %31d\n", totalValue);
+        System.out.printf("Total Value  ($): %30d\n", totalValue);
     }
 
     /* generateList()
@@ -149,12 +152,14 @@ public class Main {
         // are usable
         Random rng = new Random();
 
-        Item[] items = new Item[5];
-        items[0] = new Item("PH CrapBook", (rng.nextInt(20-1)+1), rng.nextInt(1000));
+        Item[] items = new Item[6];
+        items[0] = new Item("PH CrapBook", (rng.nextInt(20-3)+3) % backpackWeightLimit, rng.nextInt(1000));
         items[1] = new Item("Sungsam TV", (rng.nextInt(100 - 1) + 1) % backpackWeightLimit, rng.nextInt(2000));
-        items[2] = new Item("Pear aPhone 16", (rng.nextInt(5 - 1) + 1), rng.nextInt(2500));
+        items[2] = new Item("Pear aPhone 16", (rng.nextInt(5 - 2) + 2), rng.nextInt(2500));
         items[3] = new Item("Keurig Coffee Maker", (rng.nextInt(20) + 1), rng.nextInt(200));
         items[4] = new Item("Rolex Wristwatch", (rng.nextInt(3 - 1) + 1), rng.nextInt(3000));
+        items[5] = new Item("Weighted Sphere", (rng.nextInt(50 - 1) + 1)  % backpackWeightLimit, rng.nextInt(3000));
+        System.out.println();
         printList(items);
         System.out.println();
         return items;
