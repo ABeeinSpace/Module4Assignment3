@@ -105,6 +105,7 @@ public class Main {
         }
 
         printList(itemsInBackpack);
+
     }
 
     /* printList()
@@ -113,8 +114,7 @@ public class Main {
      * Description: Prints the list of items once generateList() generates it. Is also capable of printing the
      * list of items in the backpack once that is determined.*/
     private static void printList(Item[] listToPrint) {
-
-        System.out.printf("%-19s%-19s%-18s\n", "Item Name", "Item Weight", "Item Value");
+        System.out.printf("%-19s%-15s%6s\n", "Item Name", "Item Weight", "Item Value ($)");
         System.out.println("================================================");
         for (Item item : listToPrint) {
             if (item != null) {
@@ -135,8 +135,8 @@ public class Main {
                 totalValue += listToPrint[i].value;
             }
         }
-        System.out.printf("Total Weight: %30d lbs\n", totalWeight);
-        System.out.printf("Total Value: %33d $\n", totalValue);
+        System.out.printf("Total Weight (lbs.): %27d\n", totalWeight);
+        System.out.printf("Total Value ($): %31d\n", totalValue);
     }
 
     /* generateList()
@@ -150,12 +150,14 @@ public class Main {
         Random rng = new Random();
 
         Item[] items = new Item[5];
-
+        //TODO: Make sure this POS can't generate "0" for a friggin weight.
         items[0] = new Item("PH CrapBook", rng.nextInt(20), rng.nextInt(1000));
         items[1] = new Item("Sungsam TV", rng.nextInt(100) % backpackWeightLimit, rng.nextInt(2000));
         items[2] = new Item("Pear aPhone 16", rng.nextInt(5), rng.nextInt(2500));
         items[3] = new Item("Keurig Coffee Maker", rng.nextInt(20), rng.nextInt(200));
         items[4] = new Item("Rolex Wristwatch", rng.nextInt(3), rng.nextInt(3000));
+        printList(items);
+        System.out.println();
         return items;
     }
 
