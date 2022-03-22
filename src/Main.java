@@ -53,7 +53,7 @@ import java.util.*;
 
 public class Main {
 
-    //TODO: Look at Module 0 and generating the power set of the values
+    //TODO: Look at Module 0 and generating the power set of the values and make sure you did it right :P
 
     /* main()
     * Parameters: String[] args
