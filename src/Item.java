@@ -1,7 +1,7 @@
 public class Item {
-	String itemName;
-	int weight;
-	int value;
+	private String itemName;
+	private int weight;
+	private int value;
 
 	public Item(String itemName, int weight, int value) {
 		this.itemName = itemName;

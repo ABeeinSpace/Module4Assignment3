@@ -53,6 +53,8 @@ import java.util.*;
 
 public class Main {
 
+    //TODO: Look at Module 0 and generating the power set of the values
+
     /* main()
     * Parameters: String[] args
     * Returns: N/A
@@ -86,20 +88,20 @@ public class Main {
         int maxValueIndex = -1;
         for (int i = 0; i < itemsInHouse.length; i++) {
             for (int j = 0; j < itemsInHouse.length; j++) {
-                if (itemsInHouse[j].value > maxValue) {
-                    maxValue = itemsInHouse[j].value;
+                if (itemsInHouse[j].getValue() > maxValue) {
+                    maxValue = itemsInHouse[j].getValue();
                     maxValueIndex = j;
                 }
             }
-            if (maxValueIndex != -1 && backpackWeight + itemsInHouse[maxValueIndex].weight <= backpackWeightLimit) {
-                itemsInBackpack[i] = new Item(itemsInHouse[maxValueIndex].itemName,
-                        itemsInHouse[maxValueIndex].weight, itemsInHouse[maxValueIndex].value);
-                backpackWeight += itemsInHouse[maxValueIndex].weight;
-                itemsInHouse[maxValueIndex].value = -1;
+            if (maxValueIndex != -1 && backpackWeight + itemsInHouse[maxValueIndex].getWeight() <= backpackWeightLimit) {
+                itemsInBackpack[i] = new Item(itemsInHouse[maxValueIndex].getItemName(),
+                        itemsInHouse[maxValueIndex].getWeight(), itemsInHouse[maxValueIndex].getValue());
+                backpackWeight += itemsInHouse[maxValueIndex].getWeight();
+                itemsInHouse[maxValueIndex].setValue(-1);
                 maxValue = 0;
                 maxValueIndex = -1;
-            } else if (maxValueIndex != -1 && backpackWeight + itemsInHouse[maxValueIndex].weight > backpackWeightLimit) {
-                itemsInHouse[maxValueIndex].value = -1;
+            } else if (maxValueIndex != -1 && backpackWeight + itemsInHouse[maxValueIndex].getWeight() > backpackWeightLimit) {
+                itemsInHouse[maxValueIndex].setValue(-1);
                 maxValue = 0;
                 maxValueIndex = -1;
             }
@@ -129,12 +131,12 @@ public class Main {
         int totalValue = 0;
         for (Item item : listToPrint) {
             if (item != null) {
-                totalWeight += item.weight;
+                totalWeight += item.getWeight();
             }
         }
         for (Item item : listToPrint) {
             if (item != null) {
-                totalValue += item.value;
+                totalValue += item.getValue();
             }
         }
         System.out.printf("Total Weight (lbs.): %52d\n", totalWeight);
