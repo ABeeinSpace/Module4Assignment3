@@ -2,6 +2,8 @@
 * INPUTS: Backpack Weight
 * OUTPUTS: A pretty-printed list of the best items to take from the house to maximize value.
 * CONSTRAINTS:
+*   Backpack weight input must be a whole number.
+*   Dollar amounts output by the program will be whole numbers. Cents are not considered
 *
 * main():
 *   Instantiate a Scanner instance to accept user input
@@ -9,27 +11,33 @@
 *
 *   if backpackWeightLimit is a valid integer:
 *       convert to int and continue
+*       Set the isInputValid flag to prevent the loop from firing again
 *   else:
 *       Print an error
+*       Do not set the isInputValid flag, since our input is not valid.
 *
 *   Item[] itemsInHouse = generateList()
-*   Item[] itemsInBackpack = Items[10]
+*   Item[] itemsInBackpack = Items[7]
 *   backpackValue = 0
 *   backpackWeight = 0
 *
+*   int maxValue = 0;
+    int maxValueIndex = -1;
 *   for (int i = 0; i < itemsInHouse.length; i++) {
-        for (int j = i; j < itemsInHouse.length - 1; j++) {
-            We need to find the item with the highest value in the list.
-        }
+*       We need to find the item with the highest value in the list.
+
         * Once we find the highest value, we check if adding its weight to the backpack will exceed the weight limit
         * of the backpack.
         * If it will, we set the value of the item to -1 (so that we won't select it again in the next run of the
-        * nested for loop.
+        * nested for loop. We must also reset the maxValue and maxValueIndex variable to set up for the next run
         *
-        * If not, we add the item to the backpack
+        * If not, we add the item to the backpack.
         *
         * In order to add the item, we add the item's weight to the backpack's weight and add the item's monetary
         * value to the total value of the backpack
+        *
+        * We must also create a new object for the item in the backpack (once we reset the values in the next step,
+        * we lose the original value if we dont copy it somewhere)
         *
         * We then set the item's monetary value to an invalid number (such as -1) so that it won't be selected by the
         * next iteration of the nested for loop
@@ -39,21 +47,28 @@
 *
 * generateList():
 * Instantiate a Random object to use to generate the weights and values for each item.
-* Using the Item class, create an array of 10 items with randomized weights and values. Set the upper bound on the
+* Using the Item class, create an array of 7 items with randomized weights and values. Set the upper bound on the
 * nextInt() calls to something sensible.
-* Call printList() to print the new list of items, then return
+*   Optionally, you can set the random value like so: rng.nextInt(upper - lower) + lower. This will set a lower bound
+*   for the random number generator. If this isn't done, its possible to get a weight of "0" on some runs.
+* Call printList() to print the new list of items, then return the list
 *
+* printList():
+*   for i:listToPrint do
+*       if i is not null:
+*           print i to the screen
+*   for i:listToPrint do:
+*       if i is not null:
+*           Add the weight of i to totalWeight
+*           Add the value of i to totalValue
+*   print totalWeight
+*   print totalValue
 * */
-
-/*NOTES:
-* Should probably mod the object's weights by the weight limit after its randomly generated, so we don't exceed that
-* limit with one item.*/
-
 import java.util.*;
 
 public class Main {
 
-    //TODO: Look at Module 0 and generating the power set of the values and make sure you did it right :P
+    //TODO: Look at Module 0 and generating the power set of the values and make sure you did it right
 
     /* main()
     * Parameters: String[] args
@@ -113,7 +128,7 @@ public class Main {
     }
 
     /* printList()
-     * Parameters: item[] listToPrint
+     * Parameters: Item[] listToPrint
      * Returns: N/A (Void)
      * Description: Prints the list of items once generateList() generates it. Is also capable of printing the
      * list of items in the backpack once that is determined.*/
@@ -132,10 +147,6 @@ public class Main {
         for (Item item : listToPrint) {
             if (item != null) {
                 totalWeight += item.getWeight();
-            }
-        }
-        for (Item item : listToPrint) {
-            if (item != null) {
                 totalValue += item.getValue();
             }
         }
@@ -147,10 +158,11 @@ public class Main {
      * Parameters: int backpackWeightLimit
      * Returns: Item[]
      * Description: Generates the list of items, their values, and their weights. Calls printList() after the list is
-     *  generated*/
+     * generated
+     * Note: backpackWeightLimit is brought in to allow you to mod the generated weights by it in order to ensure
+     * that they're sensible for a given weight limit. If its deemed that this isn't necessary, the references to
+     * backpackWeightLimit can be removed.*/
     private static Item[] generateList(int backpackWeightLimit) {
-        // Remember that you should mod generated weights by the backpack's weight limit to ensure that the numbers
-        // are usable
         Random rng = new Random();
 
         Item[] items = new Item[7];
