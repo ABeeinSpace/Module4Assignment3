@@ -69,7 +69,7 @@
 * */
 import java.util.*;
 
-public class Main {
+public class M4A3BorderAidan {
 
     /* main()
     * Parameters: String[] args
