@@ -24,8 +24,11 @@
 *   int maxValue = 0;
     int maxValueIndex = -1;
 *   for (int i = 0; i < itemsInHouse.length; i++) {
-*       We need to find the item with the highest value in the list.
-
+*       for i in itemsInHouse do
+                if (itemsInHouse[j].Value > maxValue) {
+                    maxValue = itemsInHouse[j].Value;
+                    maxValueIndex = j;
+                }
         * Once we find the highest value, we check if adding its weight to the backpack will exceed the weight limit
         * of the backpack.
         * If it will, we set the value of the item to -1 (so that we won't select it again in the next run of the
@@ -67,8 +70,6 @@
 import java.util.*;
 
 public class Main {
-
-    //TODO: Look at Module 0 and generating the power set of the values and make sure you did it right
 
     /* main()
     * Parameters: String[] args
@@ -172,8 +173,11 @@ public class Main {
         items[3] = new Item("Keurig Coffee Maker", (rng.nextInt(20) + 1), rng.nextInt(200));
         items[4] = new Item("Rolex Wristwatch", (rng.nextInt(3 - 1) + 1), rng.nextInt(3000));
         items[5] = new Item("Weighted Sphere", (rng.nextInt(50 - 25) + 25)  % backpackWeightLimit, rng.nextInt(3000));
+                // this item has sort of a story. Basically it's a hollow sphere of some sort of metal that for some
+        // reason weighs a LOT. It's a curiosity, which is also why it costs so much
         items[6] = new Item("LEGO McLaren Formula 1 Car",
-                (rng.nextInt(20 - 5) + 5)  % backpackWeightLimit, rng.nextInt(400));
+                (rng.nextInt(200 - 5) + 5)  % backpackWeightLimit, rng.nextInt(250)); // I needed another item that
+        // went for a bit of money. That's what popped into my head.
         System.out.println("===Items in the House===");
         printList(items);
         System.out.println();
